@@ -2,23 +2,40 @@ colors = ['green', 'red', 'yellow', 'blue'];
 sequence = [];
 playerSequence = [];
 
+// add new random move
 function addToSequence() {
     sequence.push(colors[Math.floor(Math.random() * 4)]);
 }
 
-function showSequence() {
-    // add functionality to show sequence
+// show the current sequence
+async function showSequence() {
+    for (let i = 0; i < colors.length; i++) {
+        color = colors[i]
+        document.getElementById(color).style.filter = 'brightness(1)';
+        await sleep(500);
+        document.getElementById(color).style.filter = 'brightness(.7)';
+        await sleep(250);
+    };
 }
 
-// create event listeners for divs
+// create event listeners for each square
 colors.forEach(color => {
-    document.getElementById(color).addEventListener('click', () => {
+    document.getElementById(color).addEventListener('click', async () => {
        playerSequence.push(color);
-       console.log(playerSequence);
+       document.getElementById(color).style.filter = 'brightness(1)';
+       await sleep(250);
+       document.getElementById(color).style.filter = 'brightness(.7)'
     });
 });
 
-// order of gameplay
-addToSequence();
-showSequence(); 
-// await player input, if input is valid, continue
+// sleeper function
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+for (let i = 0; i < 5; i++) {
+    addToSequence();
+}
+console.log(sequence)
+showSequence();
